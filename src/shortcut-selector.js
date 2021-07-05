@@ -20,6 +20,9 @@
 
       this.options = options || {};
 
+      this.compare_code = !!this.options.compare_code;
+      this.compare_key = this.options.compare_key === undefined || !!this.options.compare_key;
+
       if(this.options.intercept_event === true) {
         g_all_shortcuts.push(this);
       }
@@ -66,7 +69,8 @@
 
       if(!shortcut) return;
 
-      if(shortcut.code !== event.code) return;
+      if(this.compare_code && shortcut.code !== event.code) return;
+      if(this.compare_key && shortcut.key !== event.key) return;
       if(shortcut.shift !== event.shiftKey) return;
       if(shortcut.ctrl !== event.ctrlKey) return;
       if(shortcut.alt !== event.altKey) return;
